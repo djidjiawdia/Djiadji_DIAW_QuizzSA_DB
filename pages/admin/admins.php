@@ -54,3 +54,83 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        const tableAdmin = $('#table-admin');
+        fileContentLoader(tableAdmin, '../table.php', {role: 'admin'});
+    })
+    
+    // Modifier Admin
+    $('#editForm').on('submit', function(e){
+        e.preventDefault();
+        const newPrenom = $('#new_prenom');
+        const newNom = $('#new_nom');
+        const newLogin = $('#new_login');
+        if(checkRequired([newPrenom, newNom, newLogin]) && checkLength(newLogin, 5, 36) && checkIfOnlyLetters(newLogin)){
+            $.ajax({
+                url: '../../controllers/userCtrl.php',
+                type: 'POST',
+                data: new FormData(this),
+                contentType: false,
+                processData: false,
+                dataType: 'JSON',
+                success: function(res){
+                    if(res.type === 'error'){
+                        alert(res.message);
+                    }else if(res.type === 'succes'){
+                        $('#editUser').modal('hide'),
+                        $('#editForm')[0].reset();
+                        $('#table-admin').empty();
+                        fileContentLoader($('#table-admin'), './../table.php', {role: 'admin'});
+                    }
+                }
+            });
+        }
+    });
+    
+    // Editer admin
+    $(document).on('click', '.edit', function(){
+        const id = $(this).attr('id');
+        const my_id = $('#my_id').attr('data-id');
+        if(my_id !== id){
+            alert("Vous ne pouvez pas modifier d'autres admins");
+        }else{
+            $.ajax({
+                url: '../../data/getAdmin.php',
+                type: 'POST',
+                data: {id: id},
+                dataType: 'JSON',
+                success: function(res){
+                    $('#editUser').modal('show');
+                    $('#new_prenom').val(res.prenom);
+                    $('#new_nom').val(res.nom);
+                    $('#new_login').val(res.login);
+                    $('#id_user').val(res.id);
+                }
+            })
+        }
+    });
+
+    // Supprimer admin
+    $(document).on('click', '.delete', function(){
+        const id = $(this).attr('id');
+        const my_id = $('#my_id').attr('data-id');
+        if(my_id === id){
+            alert("Vous ne pouvez pas supprimer votre compte");
+        }else{
+            if(confirm('Voulez-vous supprimer le compte?')){
+                $.ajax({
+                    url: '../../controllers/userCtrl.php',
+                    type: 'POST',
+                    data: {id_admin: id, operation: 'delete'},
+                    success: function(res){
+                        alert(res);
+                        $('#table-admin').html('');
+                        fileContentLoader($('#table-admin'), './../table.php', {role: 'admin'});
+                    }
+                })
+            }
+        }
+    });
+</script>

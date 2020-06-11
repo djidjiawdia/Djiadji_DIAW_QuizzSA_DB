@@ -6,14 +6,14 @@ function searchLogin($login){
     global $db;
     $stmt = $db->prepare("SELECT * FROM user INNER JOIN role ON user.id_role = role.id WHERE login = ?");
     $stmt->execute([$login]);
-    return $stmt->fetch(2);
+    return $stmt->fetch();
 }
 
 function get_all_users($role){
     global $db;
     $stmt = $db->prepare('SELECT * FROM user WHERE id_role = :id ORDER BY id DESC');
     $stmt->execute(["id" => $role]);
-    return $stmt->fetchAll(2);
+    return $stmt->fetchAll();
 }
 
 function deleteUser($id){
@@ -37,7 +37,7 @@ function getUser($id){
     global $db;
     $stmt = $db->prepare('SELECT * FROM user WHERE id = ? LIMIT 1');
     $stmt->execute([$id]);
-    return $stmt->fetch(2);
+    return $stmt->fetch();
 }
 
 function update_player($id, $val){

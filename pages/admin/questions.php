@@ -57,14 +57,157 @@
                 <span><i class="fas fa-plus-circle"></i></span>
                 Ajouter une question
             </button>
-            <form method="post" class="d-flex align-items-center">
-                <label class="my-text-primary">Nombre de questions :</label>
-                <input type="range" min="5" max="10" class="slider">
-                <span class="font-weight-bold my-text-primary ml-2">5</span>
+            <form method="post" id="nbrQuestion" class="d-flex flex-column align-items-center">
+                <label class="my-text-primary">Nombre de questions : <span id="slider_value"></span></label>
+                <input type="range" name="slider" id="slider" value="" min="0" max="10">
             </form>
         </div>
     </div>
 
-    <div class="question-content" id="question-content">
+    <div id="scrollZone" class="col">
+        <div id="content">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <h2>Loading...</h2>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        loadNumQuest();
+        let offset = 0;
+        const content = $("#content");
+        $.ajax({
+            url: '../../data/getQuestion.php',
+            type: 'POST',
+            data: {limit: 4, offset: offset},
+            success: function(res){
+                content.html('');
+                content.append(res)
+                offset += 4;
+            }
+        });
+        
+        const scrollZone = $('#scrollZone')
+        scrollZone.scroll(() => {
+            const st = scrollZone[0].scrollTop;
+            const sh = scrollZone[0].scrollHeight;
+            const ch = scrollZone[0].clientHeight;
+
+
+            if(Math.ceil(sh-st)-1 <= ch){
+                $.ajax({
+                    url: '../../data/getQuestion.php',
+                    type: 'POST',
+                    data: {limit: 4, offset: offset},
+                    success: function(res){
+                        // content.html('');
+                        content.append(res)
+                        offset += 4;
+                    }
+                });
+            }
+        })
+    });
+
+    // Ajouter un champ de réponse
+    $('#addInput').on('click', function(){
+        $('#respError').empty();
+        const numRep = $('#responses').children().length+1;
+        const type = $('#type');
+        if(checkRequired([type])){
+            if(numRep <= 4){
+                $(this).prop('disabled', false);
+                $('#responses').append(generateRep(numRep, type.val()))
+            }else{
+                $(this).prop('disabled', true);
+            }
+        }
+    });
+
+    // Type de réponse
+    $(document).on('change', '#type', function(e) {
+        $('#responses').empty();
+        $('#respError').empty();
+        if(e.target.value === 'text'){
+            $('#responses').append(generateRep(1, 'text'));
+            $('#addInput').prop('disabled', true);
+        }else{
+            $('#addInput').prop('disabled', false);
+        }
+    });
+
+    // Supprimer un champ de réponse
+    $(document).on('click', '#deleteInput', function(){
+        $(this).parents('.form-group').remove();
+        const numRep = $('#responses')[0].children.length+1;
+        const type = $('#type').val();
+        $('#responses').empty();
+        for(let i = 1; i < numRep; i++){
+            $('#responses').append(generateRep(i, type));
+        }
+    });
+
+
+    // Enregistrer une question
+    $('#enregistrer').on('click', function(e){
+        $('#respError').empty();
+        e.preventDefault();
+        const numRep = $('#responses')[0].children.length+1;
+        const question = $('#question');
+        const point = $('#point');
+        const type = $('#type');
+
+        if(checkRequired([question, point, type])){
+            const responsesEl = ($('#responses').children('.form-group'));
+            if(type.val() === 'radio' || type.val() === 'checkbox'){
+                if(responsesEl.length < 2){
+                    $('#respError').html('Ajouter au moins deux champs de réponses');
+                    return;
+                }
+            }
+            for(el of responsesEl){
+                const respText = el.querySelector('.form-control');
+                if(!validateResponse(respText)) return;
+            }
+            
+            const selectEl = $('#formAddQuest')[0].querySelectorAll(`input[type="${type.val()}"]:checked`);
+            if(type.val() === 'radio' && selectEl.length < 1){
+                $('#respError').html('Veuillez cocher la bonne réponse');
+                return;
+            }
+            
+            if(type.val() === 'checkbox' && selectEl.length < 2){
+                $('#respError').html('Veuillez cocher au moins deux réponses');
+                return;
+            }
+
+            $.ajax({
+                url: '../../controllers/questionCtrl.php',
+                method: 'POST',
+                data: $('#formAddQuest').serialize(),
+                success: function(res){
+                    $('#addNewQuest').modal('hide'),
+                    $('#formAddQuest')[0].reset();
+                    $('#question-content').load('./loadQuestion')
+                }
+            });
+        }
+    });
+
+    // Load number of questions
+    function loadNumQuest(){
+        $.ajax({
+            url: '../../data/loadNumQuest.php',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(res){
+                $('#slider').val(res[0]);
+                $('#slider_value').html(res[0])
+            }
+        })
+    }
+</script>

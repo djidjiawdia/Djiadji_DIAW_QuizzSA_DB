@@ -34,3 +34,14 @@ if(!empty($question) && !empty($type) && !empty($point) && !empty($reponse)){
         }
     }
 }
+
+if(isset($_POST['slider'])){
+    $nbr = $_POST['slider'];
+    if($nbr >= 5){
+        if(updateJeu($nbr)){
+            echo "success";
+        }else{
+            echo "error";
+        }
+    }
+}

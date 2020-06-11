@@ -11,26 +11,26 @@
             <?php if(isset($_SESSION['user'])): ?>
                 <?php if($_SESSION['user']['role'] === 'Admin'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=dashboard">Dashboard</a>
+                        <a class="nav-link" href="#" id="dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=questions">Questions</a>
+                        <a class="nav-link" href="#" id="listeQuestions">Questions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=joueurs">Joueurs</a>
+                        <a class="nav-link" href="#" id="listeJoueurs">Joueurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=admins">Admins</a>
+                        <a class="nav-link" href="#" id="listeAdmins">Admins</a>
                     </li>
                 <?php elseif($_SESSION['user']['role'] === 'Joueur'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=questions">Questions</a>
+                        <a class="nav-link" href="#" id="questions">Questions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=reponses">Réponses</a>
+                        <a class="nav-link" href="#" id="reponses">Réponses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=scores">Scores</a>
+                        <a class="nav-link" href="#" id="scores">Scores</a>
                     </li>
                 <?php endif; ?>
             <?php else: ?>

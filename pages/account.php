@@ -43,7 +43,7 @@
                         <div class="col-sm-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <div class="avatar_i">
-                                    <img id="profil" src="<?= $root ?>/public/images/avatar.png">
+                                    <img id="profil" src="/quizz/public/images/avatar.png">
                                 </div>
                                 <label for="avatar" class="btn my-btn-primary btn-sm">
                                     <span>Add photo</span>
@@ -62,3 +62,65 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Image avatar
+    $(document).on('change', '#avatar', function(){
+        if(validateAvatar(this)){
+            $('#profil')[0].src = URL.createObjectURL(avatar.files[0]);
+        }
+    });
+
+    // Enregistrer un utilisateur
+    $('#inscForm').on('submit', function(e){
+        e.preventDefault();
+        let url;
+        const role = $('#role').val();
+        const prenom = $('#prenom');
+        const nom = $('#nom');
+        const login_i = $('#login_i');
+        const password_i = $('#password_i');
+        const passConfirm = $('#passConfirm');
+        const avatar = $('#avatar')[0];
+        if(
+            checkRequired([prenom, nom, login_i, password_i, passConfirm]) && 
+            checkLength(login_i, 5, 36) && 
+            checkIfOnlyLetters(login_i) && 
+            checkLength(password_i, 6, 25) && 
+            validatePassword(password_i) &&
+            validateConfirmPassword(password_i, passConfirm) &&
+            validateAvatar(avatar)
+        ){
+            if(role === 'admin'){
+                url = '../../controllers/userCtrl.php';
+            }else if(role === 'player'){
+                url = 'controllers/userCtrl.php'
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: new FormData(this),
+                contentType: false,
+                processData: false,
+                dataType: 'JSON',
+                success: function(res){
+                    console.log(res);
+                    if(res.type === 'errorLog'){
+                        setInvalid($('#login_i')[0], res.message);
+                    }else if(res.type === 'errorPass'){
+                        setInvalid($('#passConfirm')[0], res.message);
+                    }else if(res.type === 'required' || res.type === 'errorInser'){
+                        alert(res.message);
+                    }else if(res.type === 'succes'){
+                        $('#addNewUser').modal('hide'),
+                        $('#inscForm')[0].reset();
+                        if(res.role === "admin"){
+                            $('#table-admin').empty();
+                            fileContentLoader($('#table-admin'), './../table.php', {role: 'admin'});
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>

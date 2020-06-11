@@ -24,6 +24,8 @@
 
 <script>
     $(document).ready(function(){
+        offset = 0;
+        page = 1;
         const body = $('#tbody');
         const role = $('#role').val();
         $.ajax({
@@ -78,7 +80,6 @@
             e.preventDefault();
             page = parseInt($(this).attr('data-page'));
             offset = (page-1)*limit;
-            console.log(offset, page)
             $.ajax({
                 url: '../../data/getUsers.php',
                 type: 'POST',

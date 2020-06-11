@@ -24,3 +24,17 @@ function saveResponse($response, $correct, $id_question){
         "id_question" => $id_question
     ]);
 }
+
+function updateJeu($nbr){
+    global $db;
+    $query = "
+        UPDATE jeu
+        SET nbr_question = :nbr
+        WHERE id_jeu = :id_jeu
+    ";
+    $stmt = $db->prepare($query);
+    return $stmt->execute([
+        "nbr" => $nbr,
+        "id_jeu" => 1
+    ]);
+}

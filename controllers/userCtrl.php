@@ -14,7 +14,7 @@ if(isset($_POST['login']) && isset($_POST['password'])){
             echo json_encode(["type" => "errorPass", "message" => "Mot de passe incorrect"]);
         }else{
             $_SESSION["user"] = [
-                "id" => $user["id"],
+                "id" => $user[0],
                 "prenom" => $user["prenom"],
                 "nom" => $user["nom"],
                 "login" => $user["login"],

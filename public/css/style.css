@@ -11,7 +11,7 @@ body{
 }
 
 .accueil, .interface-jeu{
-    height: 85vh;
+    max-height: 85vh;
 }
 
 .logo{
@@ -111,7 +111,7 @@ input[type="file"]{
 }
 
 #scrollZone{
-    max-height: 400px;
+    max-height: 500px;
     overflow: scroll;
 }
 
@@ -147,6 +147,10 @@ input[type="file"]{
 #numbers li.pagination_active a {
 	opacity: 1;
 	color: #fff;
+}
+
+input[type="range"] {
+    color: var(--my-primary-color);
 }
 
 .question-score{
@@ -195,6 +199,36 @@ input[type="file"]{
     border-radius: 4px;
     padding: 1rem;
     /* min-width: 48%; */
+}
+
+/* Make circles that indicate the steps of the form: */
+.steps{
+    display: flex;
+    margin-top: 30px;
+}
+
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.true {
+    background-color: var(--my-primary-color);
+}
+.step.false {
+    background-color: red;
 }
 /* [type="checkbox"]:checked,
 [type="radio"]:checked,
