@@ -49,6 +49,15 @@ function update_player($id, $val){
     ]);
 }
 
+function update_score($id, $score){
+    global $db;
+    $stmt = $db->prepare('UPDATE user SET score = :score WHERE id = :id');
+    return $stmt->execute([
+        "score" => $score,
+        "id" => $id
+    ]);
+}
+
 function saveUser($prenom, $nom, $login, $password, $avatar, $role){
     global $db;
     $score = NULL;

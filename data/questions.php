@@ -38,3 +38,11 @@ function updateJeu($nbr){
         "id_jeu" => 1
     ]);
 }
+
+function getResponses($id_q){
+    global $db;
+    $query_rep = "SELECT * FROM response WHERE id_question = ?";
+    $stmt_rep = $db->prepare($query_rep);
+    $stmt_rep->execute([$id_q]);
+    return $stmt_rep->fetchAll(2);
+}

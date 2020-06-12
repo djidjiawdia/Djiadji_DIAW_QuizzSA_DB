@@ -24,6 +24,9 @@
 
 <script>
     $(document).ready(function(){
+        limit = 5;
+        offset = 0;
+        page = 1;
         const body = $('#tbody');
         $.ajax({
             url: '../../data/getScores.php',

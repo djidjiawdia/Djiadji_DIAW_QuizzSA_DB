@@ -24,6 +24,7 @@
 
 <script>
     $(document).ready(function(){
+        limit = 3;
         offset = 0;
         page = 1;
         const body = $('#tbody');

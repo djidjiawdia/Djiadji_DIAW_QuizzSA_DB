@@ -1,6 +1,11 @@
-const limit = 2;
-let offset = 0;
-let page = 1;
+let allQuestions;
+let questions;
+let score;
+let check;
+let trouve = [];
+let limit;
+let offset;
+let page;
 let current = 0;
 $(function(){
     const adminContainer = $('#adminContainer');
@@ -14,7 +19,7 @@ $(function(){
     $('#listeQuestions').on('click', function(){navigation($(this), './questions.php', adminContainer)});
     $('#listeJoueurs').on('click', function(){navigation($(this), './joueurs.php', adminContainer)});
     $('#listeAdmins').on('click', function(){navigation($(this), './admins.php', adminContainer)});
-    $('#questions').on('click', function(){navigation($(this), './questions.php', jeuContainer)});
+    $('#questions').on('click', function(){navigation($(this), './partie.php', jeuContainer)});
     $('#reponses').on('click', function(){navigation($(this), './reponses.php', jeuContainer)});
     $('#scores').on('click', function(){navigation($(this), './scores.php', jeuContainer)});
     
@@ -22,7 +27,7 @@ $(function(){
 
     fileContentLoader(accueilContainer, './pages/accueil.php')
     fileContentLoader(adminContainer, './dashboard.php')
-    fileContentLoader(jeuContainer, './questions.php')
+    fileContentLoader(jeuContainer, './partie.php')
 
 })
 
@@ -91,32 +96,3 @@ function fileContentLoader(field, fileName, data={}){
     });
 }
 
-function showCurrent(data, n){
-    data[n].classList.remove('d-none');
-    data[n].classList.add('d-flex');
-
-    if(n <= 0){
-        $('#prev').prop('disabled', true)
-    }else{
-        $('#prev').prop('disabled', false)
-    }
-
-    if(n === (data.length)-1){
-        $('#next').html('Terminer');
-        $('#next').attr('type', 'submit');
-    }else{
-        $('#next').html('Suivant');
-    }
-
-    fixStepIndicator(n)
-}
-
-function fixStepIndicator(n){
-    // This function removes the "active" class of all steps...
-    const x = $(".step");
-    for (let i = 0; i < x.length; i++) {
-        x[i].classList.remove('active');
-    }
-    //... and adds the "active" class to the current step:
-    x[n].classList.add('active');
-}

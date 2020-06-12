@@ -39,6 +39,7 @@ CREATE TABLE jeu (
 CREATE TABLE trouver (
 	id_user INT(11) NOT NULL,
 	id_question INT(11) NOT NULL,
+	CONSTRAINT P_K PRIMARY KEY (id_user, id_question),
 	FOREIGN KEY (id_question) REFERENCES question(id_question) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (id_user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 )

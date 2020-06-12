@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../../config/db_connection.php';
 global $db;
 
@@ -18,10 +18,13 @@ $nbrQ = $req->fetch();
 $query = "
     SELECT *
     FROM question q
+    WHERE id_question NOT IN (SELECT id_question
+                                FROM trouver
+                                WHERE id_user = :id)
     ORDER BY RAND()
     LIMIT {$nbrQ[0]}
 ";
 $stmt = $db->prepare($query);
-$stmt->execute();
+$stmt->execute(["id" => $_SESSION['user']['id']]);
 $result = $stmt->fetchAll(2);
 
