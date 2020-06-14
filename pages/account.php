@@ -43,7 +43,7 @@
                         <div class="col-sm-4">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <div class="avatar_i">
-                                    <img id="profil" src="/public/images/avatar.png">
+                                    <img id="profil" src="/quizz/public/images/avatar.png">
                                 </div>
                                 <label for="avatar" class="btn my-btn-primary btn-sm">
                                     <span>Add photo</span>

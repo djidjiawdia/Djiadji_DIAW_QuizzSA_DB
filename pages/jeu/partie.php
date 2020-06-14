@@ -8,8 +8,21 @@
 
 <script>
     $(document).ready(function(){
-        $('#play').on('click', function(){
-            $('#quizzContent').load('./questions.php');
+        $.ajax({
+            url: '../../data/partie.php',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+                if(res.nbrParJeu > res.allQuest){
+                    $('#play').prop("disabled", true);
+                    $('#play').parent().append('<h5>Question indisponible pour le moment</h5>');
+                }else{
+                    $('#play').prop("disabled", false);
+                    $('#play').on('click', function(){
+                        $('#quizzContent').load('./questions.php');
+                    })
+                }
+            }
         })
     })
 </script>

@@ -12,6 +12,8 @@ if(isset($_POST['login']) && isset($_POST['password'])){
             echo json_encode(["type" => "errorLog", "message" => "L'utilisateur est inconnue"]);
         }else if($user['password'] !== $password){
             echo json_encode(["type" => "errorPass", "message" => "Mot de passe incorrect"]);
+        }else if($user['statut'] == 1){
+            echo json_encode(["type" => "bloque", "message" => "Votre compte n'est pas actif. Contactez un admin"]);
         }else{
             $_SESSION["user"] = [
                 "id" => $user[0],

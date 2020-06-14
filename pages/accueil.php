@@ -55,11 +55,13 @@
                             showError(login, res.message);
                         }else if(res.type === 'errorPass'){
                             showError(password, res.message);
-                        }else if(res.type === 'succes'){
+                        }else if(res.type === 'bloque'){
+                            alert(res.message);
+                        }else if(res.type === "succes"){
                             if(res.role === "Admin"){
-                                window.location = './pages/admin/';
+                                window.location = "./pages/admin/";
                             }else{
-                                window.location = './pages/jeu/';
+                                window.location = "./pages/jeu/";
                             }
                         }
                     }

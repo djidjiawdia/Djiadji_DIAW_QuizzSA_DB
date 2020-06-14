@@ -39,6 +39,41 @@ function navigation(field, file, container){
     fileContentLoader(container, file)
 }
 
+// Error on focus
+$(document).on('focusout', '#login', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!checkLength($(this), 5, 36)) return;
+});
+$(document).on('focusout', '#login_i', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!checkLength($(this), 5, 36)) return;
+});
+$(document).on('focusout', '#new_login', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!checkLength($(this), 5, 36)) return;
+});
+$(document).on('focusout', '#password', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!checkLength($(this), 6, 25)) return;
+    if(!validatePassword($(this))) return;
+});
+
+$(document).on('focusout', '#password_i', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!checkLength($(this), 6, 25)) return;
+    if(!validatePassword($(this))) return;
+});
+
+$(document).on('focusout', '#passConfirm', function(){
+    if(!checkRequired([$(this)])) return;
+    if(!validateConfirmPassword($('#password_i'), $(this))) return;
+});
+
+$(document).on('focusout', '#prenom', function(){checkRequired([$(this)])});
+$(document).on('focusout', '#nom', function(){checkRequired([$(this)])});
+$(document).on('focusout', '#new_prenom', function(){checkRequired([$(this)])});
+$(document).on('focusout', '#new_nom', function(){checkRequired([$(this)])});
+
 $(document).on('input', '#slider', function() {
     if($(this).val() >= 5){
         $('#slider_value').html($(this).val());

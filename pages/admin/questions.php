@@ -76,17 +76,17 @@
 </div>
 
 <script>
+    offset = 0;
     $(document).ready(function(){
         loadNumQuest();
-        let offset = 0;
-        const content = $("#content");
+        // const content = $("#content");
         $.ajax({
             url: '../../data/getQuestion.php',
             type: 'POST',
             data: {limit: 4, offset: offset},
             success: function(res){
-                content.html('');
-                content.append(res)
+                $("#content").html('');
+                $("#content").append(res)
                 offset += 4;
             }
         });
@@ -105,7 +105,7 @@
                     data: {limit: 4, offset: offset},
                     success: function(res){
                         // content.html('');
-                        content.append(res)
+                        $("#content").append(res)
                         offset += 4;
                     }
                 });
@@ -113,8 +113,27 @@
         })
     });
 
+    $(document).on('click', '#supp-quest', function(){
+        const id_q = $(this).attr('data-id');
+        if(confirm("Voulez-vous supprimer la question")){
+            $.ajax({
+                url: '../../data/deleteQuestion.php',
+                type: 'POST',
+                data: {id_question: id_q, operation: 'delete'},
+                dataType: 'JSON',
+                success: function(res){
+                    console.log(res);
+                    if(res.status == 'success'){
+                        alert(res.message);
+                        $('#adminContainer').load('./questions.php')
+                    }
+                }
+            })
+        }
+    })
+
     // Ajouter un champ de réponse
-    $('#addInput').on('click', function(){
+    $(document).on('click', '#addInput', function(){
         $('#respError').empty();
         const numRep = $('#responses').children().length+1;
         const type = $('#type');
@@ -190,9 +209,11 @@
                 method: 'POST',
                 data: $('#formAddQuest').serialize(),
                 success: function(res){
-                    $('#addNewQuest').modal('hide'),
+                    $('#addNewQuest').hide();
+                    $('.show').parent().removeClass();
                     $('#formAddQuest')[0].reset();
-                    $('#question-content').load('./loadQuestion')
+                    $('body').removeClass('modal-open');
+                    $('#adminContainer').load('./questions.php');
                 }
             });
         }
@@ -206,7 +227,7 @@
             dataType: 'JSON',
             success: function(res){
                 $('#slider').val(res[0]);
-                $('#slider_value').html(res[0])
+                $('#slider_value').html(res[0]);
             }
         })
     }

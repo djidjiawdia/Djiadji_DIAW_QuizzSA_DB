@@ -218,6 +218,29 @@ input[type="range"] {
     opacity: 0.5;
 }
 
+.stat{
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 6px;
+}
+
+.actions-quest{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+}
+
+.stat-players{
+    background-color: #05888A;
+}
+.stat-questions{
+    background-color: #BA6502;
+}
+.stat-admins{
+    background-color: #F7B924;
+}
+
 /* Mark the active step: */
 .step.active {
     opacity: 1;

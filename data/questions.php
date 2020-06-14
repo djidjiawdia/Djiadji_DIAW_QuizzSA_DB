@@ -14,6 +14,13 @@ function saveQuestion($question, $point, $type){
     return $db->lastInsertId();
 }
 
+function get_all_questions(){
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM question");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
 function saveResponse($response, $correct, $id_question){
     global $db;
     $query = "INSERT INTO response (reponse, correct, id_question) VALUES (:response, :correct, :id_question)";
@@ -45,4 +52,18 @@ function getResponses($id_q){
     $stmt_rep = $db->prepare($query_rep);
     $stmt_rep->execute([$id_q]);
     return $stmt_rep->fetchAll(2);
+}
+
+function deleteQuestion($id){
+    global $db;
+    $stmt = $db->prepare("DELETE FROM response WHERE id_question = ?");
+    if($stmt->execute([$id])){
+        $stmt1 = $db->prepare("DELETE FROM trouver WHERE id_question = ?");
+        if($stmt1->execute([$id])){
+            $stmt2 = $db->prepare("DELETE FROM question WHERE id_question = ?");
+            $stmt2->execute([$id]);
+            return true;
+        }
+    }
+    return false;
 }

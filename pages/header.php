@@ -10,5 +10,7 @@ session_start();
     <link rel="stylesheet" href="<?= $root ?>/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= $root ?>/public/css/style.css">
     <link rel="stylesheet" href="<?= $root ?>/public/css/mdb.min.css">
+
+    <script src="<?= $root ?>/public/js/chart.js"></script>
 </head>
 <body>

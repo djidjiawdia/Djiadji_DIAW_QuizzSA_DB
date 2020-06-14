@@ -59,7 +59,7 @@
             e.preventDefault();
             const my_id = $('#my_id').attr('data-id');
             if(current >= questions.length){
-                if(trouve.length > 0){
+                if(trouve.length > 0){ 
                     $.ajax({
                         url: '../../data/saveCorrectQuestions.php',
                         type: 'POST',

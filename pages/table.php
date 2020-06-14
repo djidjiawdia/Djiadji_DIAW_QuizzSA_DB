@@ -1,5 +1,5 @@
 <input type="hidden" name="role" id="role" value="<?= @$_POST['role'] ?>">
-<table class="table table-striped text-center">
+<table class="table table-xl-responsive table-striped text-center">
     <thead>
         <tr>
             <th>Prénom</th>
