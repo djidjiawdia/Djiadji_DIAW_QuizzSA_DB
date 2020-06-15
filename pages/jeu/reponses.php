@@ -4,8 +4,8 @@
 
         </div>
         <div class="d-flex align-items-center justify-content-around w-100">
-            <button type="button" class="btn btn-small btn-warning prev">Précedent</button>
-            <button type="button" class="btn btn-small my-btn-primary next">Suivant</button>
+            <button type="button" class="btn btn-sm btn-warning prev">Précedent</button>
+            <button type="button" class="btn btn-sm my-btn-primary next">Suivant</button>
         </div>
     </div>
 </div>

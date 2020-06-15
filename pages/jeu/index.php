@@ -6,6 +6,7 @@
         header("location:$root/");
     }else if($_SESSION['user']['role'] === "Admin"){
         header("location:/quizz/pages/admin/index.php");
+        // header("location:../../pages/admin/index.php");
     }
 ?>
 <?php require_once '../menu.php'; ?>

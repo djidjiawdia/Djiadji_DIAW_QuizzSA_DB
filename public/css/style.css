@@ -156,7 +156,8 @@ input[type="range"] {
 .question-score{
     position: relative;
     width: 95%;
-    min-height: 120px;
+    /* min-height: 120px; */
+    /* padding: 2rem; */
     background-color: var(--my-primary-color);
     text-align: center;
     border-radius: 6px;
@@ -184,15 +185,15 @@ input[type="range"] {
 
 .responses{
     width: 80%;
-    margin-top: 70px;
+    margin-top: 75px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-content: space-between;
+    align-items: center;
 }
 
 .resp-item{
-    margin: 0 12px 60px 0;
+    /* margin: 0 12px 60px 0; */
     color: var(--my-primary-color);
     font-size: 1.5rem;
     border: 1px solid var(--my-primary-color);
@@ -204,7 +205,6 @@ input[type="range"] {
 /* Make circles that indicate the steps of the form: */
 .steps{
     display: flex;
-    margin-top: 30px;
 }
 
 .step {

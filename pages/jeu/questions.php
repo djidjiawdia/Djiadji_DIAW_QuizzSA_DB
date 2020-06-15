@@ -16,13 +16,13 @@
                                 <span><?= $q['point'].' points' ?></span>
                             </div>
                         </div>
-                        <div class="responses row mb-3">
+                        <div class="responses row mb-md-3">
                             <?php foreach(getResponses($q['id_question']) as $i => $res): ?>
                                 <?php if($q['type'] === 'text'): ?>
                                     <input type="hidden" name="<?= 'answer'.($k+1) ?>" value="<?= htmlentities($res['reponse'], ENT_QUOTES) ?>">
                                     <input id="repText" class="form-control" name="<?= 'resp'.($k+1) ?>" type="text">
                                 <?php else: ?>
-                                    <div class="resp-item col-md-5">
+                                    <div class="resp-item col-md-5 mb-2 mb-md-4">
                                         <label>
                                             <input type="<?= $q['type'] ?>" name="<?= 'resp'.($k+1).'[]' ?>" id="resp" value="<?= $res['correct'] ?>">
                                             <?= htmlentities($res['reponse'], ENT_QUOTES) ?>
@@ -34,13 +34,13 @@
                     </div>
                 <?php endforeach; ?>
                 <div class="prev-next d-flex align-items-center justify-content-between w-100">
-                    <button type="button" class="btn btn-small btn-warning" id="prev">Précedent</button>
+                    <button type="button" class="btn btn-warning btn-sm" id="prev">Précedent</button>
                     <div class="steps">
                         <?php for($i=0; $i<sizeof($result); $i++){ ?>
                             <span class="step"></span>
                         <?php } ?>
                     </div>
-                    <button type="button" class="btn btn-small my-btn-primary" id="next">Suivant</button>
+                    <button type="button" class="btn my-btn-primary btn-sm" id="next">Suivant</button>
                 </div>
             </div>
         </form>

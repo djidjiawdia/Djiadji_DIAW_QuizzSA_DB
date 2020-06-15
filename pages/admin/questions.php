@@ -210,9 +210,8 @@
                 data: $('#formAddQuest').serialize(),
                 success: function(res){
                     $('#addNewQuest').hide();
-                    $('.show').parent().removeClass();
+                    $('.show').removeClass();
                     $('#formAddQuest')[0].reset();
-                    $('body').removeClass('modal-open');
                     $('#adminContainer').load('./questions.php');
                 }
             });

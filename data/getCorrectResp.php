@@ -50,14 +50,14 @@ if($stmt->rowCount() > 0){
                     <span>'. $result['point'] .' points </span>
                 </div>
             </div>
-            <div class="responses row mb-3">';
+            <div class="responses row row mb-md-3">';
                 foreach(getResponses($result['id_question']) as $i => $res){
                     if($result['type'] === 'text'){
                         $output .= '<input class="form-control" type="text" value="'. $res['reponse'] .'" readonly>';
                     }else{
                         $checked = ($res['correct'] == 1) ? "checked" : "";
                         $output .= '
-                            <div class="resp-item col-md-5">
+                            <div class="resp-item col-md-5 mb-2 mb-md-4">
                                 <label>
                                     <input type="'. $result['type'] .'" '. $checked .' disabled>'.
                                     htmlentities($res['reponse'], ENT_QUOTES).'

@@ -28,7 +28,6 @@ if($total_row > 0){
             <div class="card mt-2">
                 <div class="card-body">
                     <div class="actions-quest">
-                        <span class="text-warning" id="edit-quest" data-id="'. $row['id_question'] .'"><i class="fas fa-edit"></i></span>
                         <span class="text-danger" id="supp-quest" data-id="'. $row['id_question'] .'"><i class="fas fa-trash-alt"></i></span>
                     </div>
                     <h2>'.$row['id_question'].'. '. $row['question'] .'</h2>

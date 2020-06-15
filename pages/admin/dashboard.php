@@ -42,52 +42,77 @@
             dataType: 'JSON',
             success: function(res){
                 // console.log(graph1);
+                const ctx1 = $('#graph1')[0].getContext('2d');
+                const ctx2 = $('#graph2')[0].getContext('2d');
                 loadStats(res.players, $('#stat-players #number'))
                 loadStats(res.questions, $('#stat-questions #number'))
                 loadStats(res.admins, $('#stat-admins #number'))
-                const ctx1 = $('#graph1')[0].getContext('2d');
-                const graph1 = new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
-                        datasets: [{
-                            backgroundColor: '#F7E6BE',
-                            label: 'Test1',
-                            // barPercentage: 0.8,
-                            barThickness: 6,
-                            maxBarThickness: 18,
-                            // minBarLength: 2,
-                            data: [10, 20, 30, 40, 50, 60, 70]
-                        }, {
-                            barPercentage: 0.5,
-                            barThickness: 6,
-                            maxBarThickness: 8,
-                            minBarLength: 2,
-                            data: [10, 20, 30, 40, 50, 60, 70]
-                        }]
-                    },
-
-                })
-                const ctx2 = $('#graph2')[0].getContext('2d');
-                const graph2 = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['p1', 'p2', 'p3'],
-                        datasets: [{
-                            backgroundColor: [
-                                "#36A2EB",
-                                "#FF6384",
-                                "#FFCE56"
-                            ],
-                            label: 'Test1',
-                            // barPercentage: 0.8,
-                            barThickness: 6,
-                            maxBarThickness: 18,
-                            // minBarLength: 2,
-                            data: [10, 60, 30]
-                        }]
-                    },
-
+                $.ajax({
+                    url: '../../data/fetchDataChart.php',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res){
+                        console.log(Object.values(res.players));
+                        let login = [];
+                        let score = [];
+                        for(let el of res.players){
+                            login.push(el.login);
+                            score.push(el.score);
+                        }
+                        console.log(login, score);
+                        const graph1 = new Chart(ctx1, {
+                            type: 'bar',
+                            data: {
+                                labels: login,
+                                datasets: [{
+                                    label: "score",
+                                    backgroundColor: '#F7E6BE',
+                                    barThickness: 3,
+                                    maxBarThickness: 18,
+                                    data: score
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
+                                title: {
+                                    display: true,
+                                    position: 'bottom',
+                                    fontColor: '#51BFD0',
+                                    fontSize: 18,
+                                    text: "L'evolution du score des joueurs"
+                                }
+                            }
+                        })
+                        const graph2 = new Chart(ctx2, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Texte', 'Multiple', 'Simple'],
+                                datasets: [{
+                                    backgroundColor: [
+                                        "#36A2EB",
+                                        "#FF6384",
+                                        "#FFCE56"
+                                    ],
+                                    data: res.type
+                                }]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    position: 'bottom',
+                                    fontColor: '#51BFD0',
+                                    fontSize: 18,
+                                    text: 'Les types de questions'
+                                }
+                            }
+                        })
+                    }
                 })
             }
         })
